@@ -1,0 +1,115 @@
+body {
+	font-family: Verdana, Trebuchet MS, Arial, sans-serif;
+	font-size:80%;
+}
+
+#main {
+	/*border: 3px solid red;*/
+	background: #F6E4B6;
+	border-width: 1px;
+	border-color: white;
+	border-style: solid;
+	height: 60px;
+	width: 610px;
+	margin: 15px;
+	margin-left: 28px;
+	font-family: monospace;
+}
+
+#symbol_width {
+	position: absolute;
+	visibility: hidden;
+	height: auto;
+	width: auto;
+	white-space: nowrap;
+}
+
+#output {
+	display:inline-block;
+	border: 1px solid white;
+	background: #85FF96;
+	height: 100px;
+	width: 600px;
+	overflow:auto;
+	margin: 5px;
+	padding:5px;
+	/*font-family: monospace;*/
+}
+
+#error {
+	display: none;
+	
+	position: fixed;
+	width:100%;
+	height:50%;
+	overflow:auto;
+	background:#ccffff;
+	bottom:0;
+	left:0;
+}
+
+.element {
+	position: absolute;
+	text-align: center;
+	border: 1px dashed #FFC285;
+	background: white;
+}
+
+.element span {
+	vertical-align: middle;
+}
+
+#pointer1 {
+	position: absolute;
+	color:red;
+	font-weight:bold;
+}
+
+#pointer2 {
+	position: absolute;
+	color:blue;
+	font-weight:bold;
+}
+
+#border1, #border2 {
+	position: absolute;
+	background: #0293DE;
+}
+
+.button {
+  font: bold 13px;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+}
+
+.indicator {
+	display:inline-block;
+	float:left;
+	margin-left: 8px;
+	margin-right: 5px;
+	margin-top: 8px;
+	background: #ffcccc;
+	border-color: #ffffff;
+	border-width: 1px;
+	border-style: solid;
+	width:8px;
+	height:8px;
+}
+
+#settings_placeholder {
+  color: #777777;
+  padding: 2px 6px 2px 6px;
+  margin-left:20px;
+  margin-top:5px;
+}
+
+#settings_list {
+	display: none;
+  margin-top:10px;
+}

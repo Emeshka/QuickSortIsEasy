@@ -1,0 +1,83 @@
+<html>
+<head><title>QuickSort</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" type="text/css" href="gui.css">
+	<script src="gui.js"></script>
+</head>
+<body>
+	<h2>QuickSort</h2>
+	<p>Это приложение призвано продемонстрировать максимально наглядно, как действует алгоритм Быстрой сортировки.</p>
+	<p>Смысл алгоритма:</p>
+	<ol>
+		<li>Выбрать из массива элемент, назовем его опорным. Можно выбрать любой из элементов массива, хотя в отдельных случаях от выбранного элемента может сильно зависеть эффективность алгоритма.</li>
+		<li>Сравнить все остальные элементы с опорным и переставить их в массиве так, чтобы разбить массив на два куска: «меньшие опорного» и «равные или большие».</li>
+		<li>Для каждого куска выполнить рекурсивно ту же последовательность операций, если длина отрезка больше единицы.</li>
+	</ol>
+	
+	<textarea id='input' cols="80" rows="1" placeholder="Введите последовательность целых чисел через ПРОБЕЛ, которую надо сортировать..."></textarea>
+	<input id="sort" type="button" value="Sort!" onclick="if (window.htmlLoaded) sort(); else error('Wait until window is loaded');"></input>
+	<input id="previous" type="button" value="<<" title="Предыдущий ввод" onclick="if (window.htmlLoaded) historyOfInput.previous(); else error('Wait until window is loaded');"></input>
+	<input id="next" type="button" value=">>" title="Следующий ввод" onclick="if (window.htmlLoaded) historyOfInput.next(); else error('Wait until window is loaded');"></input>
+	
+	<!--<textarea id='testarea' cols="100" rows="5" placeholder="..."></textarea>
+	<input id="eval" type="button" value="eval" onclick="eval(document.getElementById('testarea').value)"></input>-->
+
+	<div id="main" title="Здесь будет проигрываться анимация"></div>
+	<span>
+		<div class="indicator" id="animationFinishedIndicator" title="анимация не закончилась"></div>
+		<div id="output" title="Результат сортировки с пошаговым объяснением"></div>
+	</span><br>
+	<span title="Кликните чтобы развернуть/свернуть настройки" onclick="showSettings()" class="button">Настройки (до начала анимации):
+	<div class="indicator" id="settingsAppliedIndicator" title="настройки не сохранены"></div></span>
+	<div id="settings_placeholder">...</div>
+	<div id="settings_list">
+		<font color="grey">Форма записи цвета: в шестнадцатиричной форме либо английским словом типа 'grey', 'red', 'yellow' и т.д.<br>
+		Любые числовые обозначения без единиц измерения. Дроби должны быть только десятичными, и притом с точкой, а не с запятой.</font>
+		<p>Вы можете настроить удобный вам размер шрифта (px):
+			<textarea id='font_size' cols="4" rows="1" placeholder="25"></textarea>
+			<input type="button" value="Применить размер" onclick="if (window.htmlLoaded) applyFontSize(); else error('Wait until window is loaded');"></input>
+		</p>
+		<ul id="settingsChange">
+			<li><span title="Отступ элемента от правого края соседнего с ним элемента, включая рамки обоих (px)">Отступ между элементами: </span>
+				<textarea id='set_elMarginLeft' cols="5" rows="1" placeholder="4"></textarea></li>
+			<li><span title="Внутренний отступ поля, на котором происходит анимация (px)">Внутренний отступ контейнера с элементами: </span>
+				<textarea id='set_mainPadding' cols="5" rows="1" placeholder="3"></textarea></li>
+			<li><span title="Обновлять кадры при анимации каждые n миллисекунд (мс)">Интервал анимации: </span>
+				<textarea id='set_interval' cols="5" rows="1" placeholder="50"></textarea></li>
+			<li><span title="Коэффициент скорости: 1 - проедет одну ширину элемента за столько миллисекунд, сколько указано в интервале; 1/7 - одну седьмую ширины элемента и т.д.">Скорость движения элементов и стрелочек: </span>
+				<textarea id='set_standardVelocityK' cols="10" rows="1" placeholder="0.1428..."></textarea></li>
+			<li><span title="Пауза между концом предыдущей анимации и началом следующей (мс). Рекомендуется значение больше 50 мс">Пауза анимации: </span>
+				<textarea id='set_pause' cols="10" rows="1" placeholder="2000"></textarea></li>
+			<li><span title="Цвет, которым окрашен фон опорного элемента">Цвет опорного элемента: </span>
+				<textarea id='set_highlightChosen' cols="10" rows="1" placeholder="#5BDE02"></textarea></li>
+			<li><span title="Цвет, которым мигает элемент, на котором запнулась стрелочка">Цвет подсветки активного элемента: </span>
+				<textarea id='set_highlightEls' cols="10" rows="1" placeholder="#F287D0"></textarea></li>
+			<hr>
+			<li><span title="Цвет фона элементов">Цвет фона элементов: </span>
+				<textarea id='set_elBack' cols="10" rows="1" placeholder="#ffffff"></textarea></li>
+			<li><span title="Цвет текста элементов">Цвет текста элементов: </span>
+				<textarea id='set_elColor' cols="10" rows="1" placeholder="#000000"></textarea></li>
+			<li><span title="Цвет границы элементов">Цвет границы элементов: </span>
+				<textarea id='set_elBorder' cols="10" rows="1" placeholder="#FFC285"></textarea></li>
+			<li><span title="Цвет фона поля, на котором происходит анимация">Цвет фона контейнера с элементами: </span>
+				<textarea id='set_mainBack' cols="10" rows="1" placeholder="#F6E4B6"></textarea></li>
+			<!--<li><textarea id='set_mainColor' title="" cols="5" rows="1" placeholder=""></textarea></li>-->
+			<li><span title="Цвет границы поля, на котором происходит анимация">Цвет границы контейнера с элементами: </span>
+				<textarea id='set_mainBorder' cols="10" rows="1" placeholder="#ffffff"></textarea></li>
+			<li><span title="Цвет фона ответа">Цвет фона ответа: </span>
+				<textarea id='set_outputBack' cols="10" rows="1" placeholder="#85FF96"></textarea></li>
+			<li><span title="Цвет текста ответа">Цвет текста ответа: </span>
+				<textarea id='set_outputColor' cols="10" rows="1" placeholder="#000000"></textarea></li>
+			<li><span title="Цвет границы ответа">Цвет границы ответа: </span>
+				<textarea id='set_outputBorder' cols="10" rows="1" placeholder="#0000ff"></textarea></li>
+		</ul>
+		<input id="setAll" type="button" value="Применить настройки" onclick="if (window.htmlLoaded) applySettings(); else error('Wait until window is loaded');"></input>
+	</div>
+	<div id="error"></div>
+	<div id="symbol_width">W</div>
+	<script>
+	alert("java::onload=true");
+	initialize();
+	</script>
+</body>
+</html>
